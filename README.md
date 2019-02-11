@@ -7,9 +7,9 @@ The ODC Conference 2019 is running from the 11th through the 14th of Feburary. F
 
 | Task Leader | Task title |
 | ------------- | ------------- |
-| Norman Mueller | [Land cover, change and application](landcover_change_application/readme.md) |
-| Brian Killough | [Data interoperability statistics](data_interoperability_statistics/readme.md) |
-| Brian Killough | [Water interoperability](water_interoperability/readme.md) |
-| Brian Killough | [Land change interoperability](land_change_interoperability/readme.md) |
+| Belle Tissot | [Land cover, change and application](landcover_change_application/readme.md) |
+| John Rattz | [Data interoperability statistics](data_interoperability_statistics/readme.md) |
+| Otto Wagner | [Water interoperability](water_interoperability/readme.md) |
+| Syed Rizvi | [Land change interoperability](land_change_interoperability/readme.md) |
 | Chris Morgan | [Implement distributed parallel processing](dask_implementation/readme.md) |
-| Alex Leith | [State of the forest indicators](state_of_the_forest/readme.md) |
+| ??? | [State of the forest indicators](state_of_the_forest/readme.md) |
