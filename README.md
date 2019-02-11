@@ -5,11 +5,11 @@ The ODC Conference 2019 is running from the 11th through the 14th of Feburary. F
 
 ## Tasks
 
-| Task Leader | Task title |
-| ------------- | ------------- |
-| Belle Tissot | [Land cover, change and application](landcover_change_application/readme.md) |
-| John Rattz | [Data interoperability statistics](data_interoperability_statistics/readme.md) |
-| Otto Wagner | [Water interoperability](water_interoperability/readme.md) |
-| Syed Rizvi | [Land change interoperability](land_change_interoperability/readme.md) |
-| Chris Morgan | [Implement distributed parallel processing](dask_implementation/readme.md) |
-| ??? | [State of the forest indicators](state_of_the_forest/readme.md) |
+| Task Leader | Room |Task title |
+| ------------- | -- | ------------- |
+| Belle Tissot | 4.146 |  [Land cover, change and application](landcover_change_application/readme.md) |
+| John Rattz | 4.136 | [Data interoperability statistics](data_interoperability_statistics/readme.md) |
+| Otto Wagner | 4.153 | [Water interoperability](water_interoperability/readme.md) |
+| Syed Rizvi | 4.134 | [Land change interoperability](land_change_interoperability/readme.md) |
+| Chris Morgan | 4.086 | [Implement distributed parallel processing](dask_implementation/readme.md) |
+| ??? | ? |[State of the forest indicators](state_of_the_forest/readme.md) |
