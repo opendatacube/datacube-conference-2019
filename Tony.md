@@ -4,6 +4,15 @@
 
 I will fill out the template once it is created for ODC-lite
 
+```
+
+ ____  ____  ____        _     _  _____  _____
+/  _ \/  _ \/   _\      / \   / \/__ __\/  __/
+| / \|| | \||  /  _____ | |   | |  / \  |  \  
+| \_/|| |_/||  \__\____\| |_/\| |  | |  |  /_ 
+\____/\____/\____/      \____/\_/  \_/  \____\
+```
+
 
 ## OSIP 123 - Implement a simple ODC-lite package as a precursor for those interested in ODC
 
