@@ -42,9 +42,9 @@ State
 
 ODC has tremendous application potential.
 
-However; ODC is difficult to install and has a huge dependency tree. Xarray concepts and jupyter notebooks may be foreign to most initail ODC onlookers.
+However; ODC is difficult to install and has a huge dependency tree. Xarray concepts and jupyter notebooks may be foreign to most new ODC onlookers.
 
-This package makes it so simple even a cave-man can run an ODC like notebook. Then once hooked more sophisticated applications can be acheived by using ODC.
+This package makes it so simple even a cave-man can run an ODC-lite ODC like notebook. Then once hooked more sophisticated applications can be acheived by using ODC.
 
 This will be a separate repo - its documented here to fit into the bigger picture of ODC sponsored events and as part of the training package - titled "A gentle introduction to Open Data Cube; Your Data on Display"
 
