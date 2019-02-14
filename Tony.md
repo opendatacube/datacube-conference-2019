@@ -5,7 +5,6 @@
 I will fill out the template once it is created for ODC-lite
 
 ```
-
  ____  ____  ____        _     _  _____  _____
 /  _ \/  _ \/   _\      / \   / \/__ __\/  __/
 | / \|| | \||  /  _____ | |   | |  / \  |  \  
@@ -50,7 +49,7 @@ This will be a separate repo - its documented here to fit into the bigger pictur
 
 
 
-### Project Steering Committee:
+### Project Steering Committee (Voting):
 
 - Andrew Cherry (Chair)
 - Alex Leith (FrontierSI)
@@ -59,8 +58,8 @@ This will be a separate repo - its documented here to fit into the bigger pictur
 - Luigi Di Fraia (Catapult)
 - Peter Wang (Data61)
 - Syed Rizvi (AMA)
-- Randall Sunne (USGS)
-- Tony Butzer (USGS)
+- Randall Sunne (USGS): +1
+- Tony Butzer (USGS): +1
 - George Dyke (Symbios)
 
    
