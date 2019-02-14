@@ -66,8 +66,8 @@ This will be a separate repo - its documented here to fit into the bigger pictur
    
 
 ### Links
-https://docs.google.com/presentation/d/1MGpPrvwRUG8KGa9Brmlqi0-fLID8ITV8PXiTa9mVaw0/edit?ts=5c584ed7#slide=id.p
+[Labahns Cloud Deployments Presentation](https://docs.google.com/presentation/d/1MGpPrvwRUG8KGa9Brmlqi0-fLID8ITV8PXiTa9mVaw0/edit?ts=5c584ed7#slide=id.p)
 
-https://drive.google.com/open?id=1ud-L5NrdMNly-w9EV444cPpCMFSiDjUl
+[Example Rwanda Cube via ODC-lite](https://drive.google.com/open?id=1ud-L5NrdMNly-w9EV444cPpCMFSiDjUl)
 
 
