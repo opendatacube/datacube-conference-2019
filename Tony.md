@@ -10,19 +10,24 @@ I will fill out the template once it is created for ODC-lite
 ### Overview
 Proposed By
 
-Tony Butzer
-Assigned to Release None - this is standalone companion software outside of core.
+#### Tony Butzer
+
+
+
+
+*Assigned to Release: None* 
+- this is standalone companion software outside of core.
 
 This proposal is for a simple odc-lite repository
 State
 
     Under Discussion
-    In Progress
+     --> In Progress
     Completed
     Rejected
     Deferred
 
-Motivation
+### Motivation
 
 ODC has tremendous application potential.
 
@@ -34,7 +39,18 @@ This will be a separate repo - its documented here to fit into the bigger pictur
 
 
 
-Project Steering Committee:
+### Project Steering Committee:
+
+Andrew Cherry (Chair)
+Alex Leith (FrontierSI)
+David Gavin (GA)
+Damien Ayers (GA)
+Luigi Di Fraia (Catapult)
+Peter Wang (Data61)
+Syed Rizvi (AMA)
+Randall Sunne (USGS)
+Tony Butzer (USGS)
+George Dyke (Symbios)
 
    
 
