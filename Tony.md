@@ -18,6 +18,9 @@ I will fill out the template once it is created for ODC-lite
 ### Some folks might be scared off by the enormity/immensity of Open Data Cube
 
 ### Overview
+
+![overview pic](./tony-odc-lite.png)
+
 Proposed By
 
 #### Tony Butzer
