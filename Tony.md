@@ -5,7 +5,9 @@
 I will fill out the template once it is created for ODC-lite
 
 
-## OSIP 123 - Implement a simple ODC-lite package as a precursos for those interested in ODC
+## OSIP 123 - Implement a simple ODC-lite package as a precursor for those interested in ODC
+
+### Bunt might be scared off by the enormity of Open Data Cube
 
 ### Overview
 Proposed By
