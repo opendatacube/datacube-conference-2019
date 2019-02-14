@@ -52,16 +52,16 @@ This will be a separate repo - its documented here to fit into the bigger pictur
 
 ### Project Steering Committee:
 
-Andrew Cherry (Chair)
-Alex Leith (FrontierSI)
-David Gavin (GA)
-Damien Ayers (GA)
-Luigi Di Fraia (Catapult)
-Peter Wang (Data61)
-Syed Rizvi (AMA)
-Randall Sunne (USGS)
-Tony Butzer (USGS)
-George Dyke (Symbios)
+- Andrew Cherry (Chair)
+- Alex Leith (FrontierSI)
+- David Gavin (GA)
+- Damien Ayers (GA)
+- Luigi Di Fraia (Catapult)
+- Peter Wang (Data61)
+- Syed Rizvi (AMA)
+- Randall Sunne (USGS)
+- Tony Butzer (USGS)
+- George Dyke (Symbios)
 
    
 
