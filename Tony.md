@@ -32,7 +32,8 @@ Proposed By
 - this is standalone companion software outside of core.
 
 This proposal is for a simple odc-lite repository
-State
+
+### State
 
     Under Discussion
      --> In Progress
