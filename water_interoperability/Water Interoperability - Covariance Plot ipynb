@@ -1,0 +1,343 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "**Import datacube and dependencies - should not need to copy entire cell**"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "%matplotlib inline\n",
+    "\n",
+    "# Import the path to the root directory to import utilites.\n",
+    "import sys\n",
+    "sys.path.append('../..')\n",
+    "\n",
+    "import datacube\n",
+    "from utils.data_cube_utilities.data_access_api import DataAccessApi\n",
+    "from utils.data_cube_utilities.dc_display_map import display_map\n",
+    "import numpy as np\n",
+    "import pandas as pd\n",
+    "import matplotlib.pyplot as plt\n",
+    "import xarray as xr\n",
+    "import datetime as dt\n",
+    "\n",
+    "# Create an instance of the datacube and API\n",
+    "api = DataAccessApi()#config=\"/home/localuser/.datacube.conf\"\n",
+    "dc = api.dc"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Landsat 8 data is not ascending in time.\n",
+    "l8 = xr.open_dataset('l8_wofs.nc').wofs.load().sortby('time')\n",
+    "s1 = xr.open_dataset('s1_water_v2.nc').wofs.load()\n",
+    "s2 = xr.open_dataset('wofs_s2ab.nc').wofs.load()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Create montly composites. \n",
+    "# Reindex to ensure there is data for each month, even if NaN.\n",
+    "l8_monthly = l8.groupby('time.month').mean(dim='time')\n",
+    "    #l8.resample(time='2m').mean(dim='time')\n",
+    "# del l8\n",
+    "s1_monthly = s1.groupby('time.month').mean(dim='time')\n",
+    "# del s1\n",
+    "s2_monthly = s2.groupby('time.month').mean(dim='time')\n",
+    "# del s2"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "scrolled": false
+   },
+   "outputs": [],
+   "source": [
+    "# print(\"\\nLANDSAT 8\")\n",
+    "# for month_val in l8_monthly.month:\n",
+    "#     l8_monthly.sel(month=month_val).plot()\n",
+    "#     plt.show()\n",
+    "# print(\"\\nSENTINEL 1\")\n",
+    "# for month_val in s1_monthly.month:\n",
+    "#     s1_monthly.sel(month=month_val).plot()\n",
+    "#     plt.show()\n",
+    "# print(\"\\nSENTINEL 2\")\n",
+    "# for month_val in s2_monthly.month:\n",
+    "#     s2_monthly.sel(month=month_val).plot()\n",
+    "#     plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "scrolled": false
+   },
+   "outputs": [],
+   "source": [
+    "print(\"Landsat 8:\", l8_monthly)\n",
+    "print(\"Sentinel 1:\", s1_monthly)\n",
+    "print(\"Sentinel 2:\", s2_monthly)\n",
+    "print()\n",
+    "print(\"L8 fraction not nan:\", l8.count(dim='time')/len(l8.time))\n",
+    "print(\"L8 monthly fraction not nan:\", l8_monthly.count(dim='month')/len(l8_monthly.month))\n",
+    "print(\"S1 fraction not nan:\", s1.count(dim='time')/len(s1.time))\n",
+    "print(\"S1 monthly fraction not nan:\", s1_monthly.count(dim='month')/len(s1_monthly.month))\n",
+    "print(\"S2 fraction not nan:\", s2.count(dim='time')/len(s2.time))\n",
+    "print(\"S2 monthly fraction not nan:\", s2_monthly.count(dim='month')/len(s2_monthly.month))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {
+    "scrolled": false
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "0.0 percent complete\n"
+     ]
+    },
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "/usr/local/lib/python3.6/dist-packages/numpy/lib/function_base.py:2530: RuntimeWarning: invalid value encountered in true_divide\n",
+      "  c /= stddev[:, None]\n",
+      "/usr/local/lib/python3.6/dist-packages/numpy/lib/function_base.py:2531: RuntimeWarning: invalid value encountered in true_divide\n",
+      "  c /= stddev[None, :]\n"
+     ]
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "0.011961722488038277 percent complete\n",
+      "0.023923444976076555 percent complete\n",
+      "0.03588516746411483 percent complete\n",
+      "0.04784688995215311 percent complete\n",
+      "0.05980861244019139 percent complete\n",
+      "0.07177033492822966 percent complete\n",
+      "0.08373205741626795 percent complete\n",
+      "0.09569377990430622 percent complete\n",
+      "0.1076555023923445 percent complete\n",
+      "0.11961722488038277 percent complete\n",
+      "0.13157894736842105 percent complete\n",
+      "0.14354066985645933 percent complete\n",
+      "0.15550239234449761 percent complete\n",
+      "0.1674641148325359 percent complete\n"
+     ]
+    },
+    {
+     "ename": "KeyboardInterrupt",
+     "evalue": "",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mKeyboardInterrupt\u001b[0m                         Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-15-66e188f0d2d9>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m\u001b[0m\n\u001b[1;32m    118\u001b[0m \u001b[0;31m#                 print(\"Enough values\")\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    119\u001b[0m                 \u001b[0mcorr_arr\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0my_ind\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mx_ind\u001b[0m\u001b[0;34m]\u001b[0m \u001b[0;34m=\u001b[0m\u001b[0;31m \u001b[0m\u001b[0;31m\\\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 120\u001b[0;31m                     \u001b[0mnp\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mcorrcoef\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mpoint_vecs_no_nan\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mpoint_vecs_no_nan\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;36m1\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;36m1\u001b[0m\u001b[0;34m]\u001b[0m \u001b[0;31m# Shape is (month, pair_index)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    121\u001b[0m     \u001b[0mprint\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mcorr_arr\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mmean\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    122\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/usr/local/lib/python3.6/dist-packages/numpy/lib/function_base.py\u001b[0m in \u001b[0;36mcorrcoef\u001b[0;34m(x, y, rowvar, bias, ddof)\u001b[0m\n\u001b[1;32m   2520\u001b[0m         warnings.warn('bias and ddof have no effect and are deprecated',\n\u001b[1;32m   2521\u001b[0m                       DeprecationWarning, stacklevel=2)\n\u001b[0;32m-> 2522\u001b[0;31m     \u001b[0mc\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mcov\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mx\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0my\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mrowvar\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   2523\u001b[0m     \u001b[0;32mtry\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   2524\u001b[0m         \u001b[0md\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mdiag\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mc\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/usr/local/lib/python3.6/dist-packages/numpy/lib/function_base.py\u001b[0m in \u001b[0;36mcov\u001b[0;34m(m, y, rowvar, bias, ddof, fweights, aweights)\u001b[0m\n\u001b[1;32m   2425\u001b[0m             \u001b[0mw\u001b[0m \u001b[0;34m*=\u001b[0m \u001b[0maweights\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   2426\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 2427\u001b[0;31m     \u001b[0mavg\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mw_sum\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0maverage\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mX\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0maxis\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;36m1\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mweights\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0mw\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mreturned\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;32mTrue\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   2428\u001b[0m     \u001b[0mw_sum\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mw_sum\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;36m0\u001b[0m\u001b[0;34m]\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   2429\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/usr/local/lib/python3.6/dist-packages/numpy/lib/function_base.py\u001b[0m in \u001b[0;36maverage\u001b[0;34m(a, axis, weights, returned)\u001b[0m\n\u001b[1;32m    426\u001b[0m     \u001b[0;32mif\u001b[0m \u001b[0mreturned\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    427\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0mscl\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mshape\u001b[0m \u001b[0;34m!=\u001b[0m \u001b[0mavg\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mshape\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 428\u001b[0;31m             \u001b[0mscl\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mnp\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mbroadcast_to\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mscl\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mavg\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mshape\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mcopy\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    429\u001b[0m         \u001b[0;32mreturn\u001b[0m \u001b[0mavg\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mscl\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    430\u001b[0m     \u001b[0;32melse\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/usr/local/lib/python3.6/dist-packages/numpy/lib/stride_tricks.py\u001b[0m in \u001b[0;36mbroadcast_to\u001b[0;34m(array, shape, subok)\u001b[0m\n\u001b[1;32m    180\u001b[0m            [1, 2, 3]])\n\u001b[1;32m    181\u001b[0m     \"\"\"\n\u001b[0;32m--> 182\u001b[0;31m     \u001b[0;32mreturn\u001b[0m \u001b[0m_broadcast_to\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0marray\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mshape\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0msubok\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0msubok\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mreadonly\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;32mTrue\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    183\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    184\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;32m/usr/local/lib/python3.6/dist-packages/numpy/lib/stride_tricks.py\u001b[0m in \u001b[0;36m_broadcast_to\u001b[0;34m(array, shape, subok, readonly)\u001b[0m\n\u001b[1;32m    127\u001b[0m     it = np.nditer(\n\u001b[1;32m    128\u001b[0m         \u001b[0;34m(\u001b[0m\u001b[0marray\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mflags\u001b[0m\u001b[0;34m=\u001b[0m\u001b[0;34m[\u001b[0m\u001b[0;34m'multi_index'\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m'refs_ok'\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m'zerosize_ok'\u001b[0m\u001b[0;34m]\u001b[0m \u001b[0;34m+\u001b[0m \u001b[0mextras\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 129\u001b[0;31m         op_flags=[op_flag], itershape=shape, order='C')\n\u001b[0m\u001b[1;32m    130\u001b[0m     \u001b[0;32mwith\u001b[0m \u001b[0mit\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    131\u001b[0m         \u001b[0;31m# never really has writebackifcopy semantics\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mKeyboardInterrupt\u001b[0m: "
+     ]
+    }
+   ],
+   "source": [
+    "def xr_calc_corr(da1, da2, dim):\n",
+    "    \"\"\"\n",
+    "    Finds the minimum, mean, median, or maximum time difference between True values\n",
+    "    in a boolean xarray.DataArray.\n",
+    "    \n",
+    "    Parameters\n",
+    "    ----------\n",
+    "    da1, da2: list of 2 xarray.DataArray\n",
+    "        The xarray.DataArrays to calculate correlation for\n",
+    "    dim: list of str\n",
+    "        The dimensions to calculate correlation for. The remaining dimensions\n",
+    "        will be flattened and have their correlation calculated. So `dims` are\n",
+    "        the dimensions to keep in the final result.\n",
+    "\n",
+    "    Returns\n",
+    "    -------\n",
+    "    out_arr: xarray.DataArray of np.timedelta64\n",
+    "        The time differences.\n",
+    "    \"\"\"\n",
+    "    def calc_corr_np_arr(arr, axis):\n",
+    "        \"\"\"\n",
+    "        Calculate the correlation of a NumPy array over a set of axes.\n",
+    "        \n",
+    "        Parameters\n",
+    "        ----------\n",
+    "        arr: NumPy array\n",
+    "        axis: list of int\n",
+    "            A list of the axes to calculate correlation over.\n",
+    "        \"\"\"\n",
+    "#         def calc_corr_np_arr_1d(arr_1d, axis):\n",
+    "#             print(\"arr_1d.shape:\", arr_1d.shape)\n",
+    "#             print(\"axis:\", axis)\n",
+    "#             return numpy.corrcoef(list1, list2)[0, 1]\n",
+    "#             desired_mask = arr_1d == 1\n",
+    "#             arr_desired = arr_1d[desired_mask]\n",
+    "#             times_desired = data_arr.time.values[desired_mask]\n",
+    "#             # For each True element, calculate the time difference to the next True element.\n",
+    "#             time_diffs = np.diff(times_desired)\n",
+    "#             # Handle the case of there being no \"True\" instances.\n",
+    "#             if len(time_diffs) == 0: # Must return single value, not an array.\n",
+    "#                 return np.diff(data_arr.time.values[[0,-1]])[0]\n",
+    "#             # Calculate the desired statistic for the time differences for this lat/lon point.\n",
+    "#             if aggregation_method == 'min':      return np.min(time_diffs)\n",
+    "#             elif aggregation_method == 'mean':   return np.mean(time_diffs)\n",
+    "#             elif aggregation_method == 'median': return np.median(time_diffs)\n",
+    "#             elif aggregation_method == 'max':    return np.max(time_diffs)\n",
+    "        \n",
+    "#         print(\"arr:\", arr.shape)\n",
+    "#         result = np.apply_along_axis(calc_corr_np_arr_1d, axis=axis, arr=arr)\n",
+    "#         result = np.apply_over_axes(calc_corr_np_arr_1d, da1, axes=axis)\n",
+    "#         result = np.corrcoef(da1, da2)[0,1]    \n",
+    "#         print(\"result.shape:\", result.shape)\n",
+    "        return result\n",
+    "    \n",
+    "#     # The dimensions to flatten and calculate correlation for.\n",
+    "#     corr_dims = list(set(da1.dims) - (set(dims)))\n",
+    "#     print(corr_dims)\n",
+    "#     print(da1.reduce(calc_corr_np_arr, dim=corr_dims))\n",
+    "# #     merged = xr.merge([da1.rename(\"da1\"), da2.rename(\"da2\")])\n",
+    "# #     print(\"merged:\", merged)\n",
+    "#     merged.reduce(calc_corr_np_arr, dim=corr_dims)\n",
+    "# #     print(\"merged:\", merged)\n",
+    "#           #{\"da1\": da1.rename(\"da1\"), \"da2\": da2.rename(\"da2\")}))\n",
+    "# #     return \n",
+    "    \n",
+    "#     np.corrcoef(l8_monthly)[0,1]\n",
+    "\n",
+    "# xr_calc_corr(l8_monthly, s1_monthly, dims=['month'])\n",
+    "\n",
+    "# def xr_calc_corr(*args, **kwargs):\n",
+    "#     \"\"\"\n",
+    "#     Calculates correlation of two xarray.DataArrays\n",
+    "    \n",
+    "#     Parameters\n",
+    "#     ---------\n",
+    "#     da1, da2: xarray.DataArray\n",
+    "#         The xarray DataArrays \n",
+    "#     *args: list\n",
+    "#         Must be a list of two xarray.DataArrays to calcualte correlation for.\n",
+    "#     **kwargs: dict\n",
+    "#         Unused.\n",
+    "#     \"\"\"\n",
+    "#     args = [arg.flatten() for arg in args]\n",
+    "#     print(np.corrcoef(*args)[0,1])\n",
+    "#     return np.corrcoef(*args)[0,1]\n",
+    "\n",
+    "# NO - have to resolve axis index from dimension name manually\n",
+    "# x,y = [1, 2, 3], [0, 1, 0.5]\n",
+    "# xr.apply_ufunc(xr_calc_corr, l8_monthly, s1_monthly, join='left')\n",
+    "\n",
+    "time_axis_ind = l8_monthly.dims.index('month') # Axis to find correlation for.\n",
+    "import itertools\n",
+    "# Create a heat map of correlation across time for every pair of products.\n",
+    "for pair in itertools.combinations([l8_monthly, s1_monthly, s2_monthly], 2):\n",
+    "    # 1. Combine the data into a new NumPy array.\n",
+    "    # Shape should be [month, y, x, pair_index].\n",
+    "    combined_arr = np.stack([pair[0].values, pair[1].values], axis=-1)\n",
+    "#     print(combined_arr.shape)\n",
+    "    # 2. Create a new NumPy array to hold the correlation coefficients.\n",
+    "    # Shape should be [y, x].\n",
+    "    corr_arr = np.empty((combined_arr.shape[1], combined_arr.shape[2]))\n",
+    "#     print(corr_arr.shape)\n",
+    "#     print(len(pair[0].y), len(pair[0].x))\n",
+    "    # 3. Calculate correlation for\n",
+    "    for x_ind in range(len(pair[0].x)):\n",
+    "        if x_ind % 10 == 0:#(len(pair[0].x)/10) == 0:\n",
+    "            print(\"{} percent complete\".format(x_ind/len(pair[0].x)))\n",
+    "        for y_ind in range(len(pair[0].y)):\n",
+    "            point_vecs = combined_arr[:,y_ind,x_ind,:]\n",
+    "            # Filter out any months which have NaN values for either\n",
+    "            # dataset member of this pair.\n",
+    "            months_inds_with_nan = np.any(np.isnan(point_vecs), axis=1)\n",
+    "            point_vecs_no_nan = point_vecs[~months_inds_with_nan,:]\n",
+    "            if point_vecs_no_nan.shape[0] < 2:\n",
+    "#                 print(\"Too many NaNs, returning NaN\")\n",
+    "                corr_arr[y_ind, x_ind] = np.nan\n",
+    "            else:\n",
+    "#                 print(\"Enough values\")\n",
+    "                corr_arr[y_ind, x_ind] = \\\n",
+    "                    np.corrcoef(point_vecs_no_nan[:,0], point_vecs_no_nan[:,1])[0,1] # Shape is (month, pair_index)\n",
+    "    print(corr_arr.mean())\n",
+    "            \n",
+    "#     from xarray.ufuncs import fabs as xr_abs\n",
+    "#     diff = pair[1] - pair[0]\n",
+    "#     print(diff)\n",
+    "#     print()\n",
+    "#     diff = xr_abs(diff)\n",
+    "#     print(diff)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(np.nanmean(corr_arr))\n",
+    "plt.imshow(corr_arr)\n",
+    "plt.colorbar()\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# print(np.corrcoef([1,np.nan,3], [np.nan, 2, 3]))\n",
+    "# np.corrcoef([1, 2],[1, 2])"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.7"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
